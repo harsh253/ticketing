@@ -1,5 +1,6 @@
 import express from "express";
 import "express-async-errors";
+import { initDB } from "./config/db";
 import { NotFoundError } from "./error/NotFoundError";
 import { errorHandler } from "./middlewares/errorHandler";
 import { currentUserRouter } from "./routes/current-user";
@@ -22,5 +23,7 @@ app.all("*", () => {
 });
 
 app.use(errorHandler);
+
+initDB();
 
 app.listen(PORT, () => console.log(`Running auth service on port - ${PORT}`));
