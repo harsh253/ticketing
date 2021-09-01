@@ -4,6 +4,7 @@ import { validationResult } from "express-validator";
 import { RequestValidationError } from "../error/RequestValidationError";
 import { BusinessValidationError } from "../error/BusinessValidationError";
 import { User } from "../models/User";
+import jwt from "jsonwebtoken";
 
 const router = express.Router();
 
@@ -31,6 +32,18 @@ router.post(
     });
 
     await user.save();
+
+    const token = jwt.sign(
+      {
+        id: user.id,
+        email: user.email,
+      },
+      "secretkey"
+    );
+
+    req.session = {
+      jwt: token,
+    };
 
     res.status(201).send(user);
   }

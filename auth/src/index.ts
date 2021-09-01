@@ -1,3 +1,4 @@
+import cookieSession from "cookie-session";
 import express from "express";
 import "express-async-errors";
 import { initDB } from "./config/db";
@@ -9,6 +10,13 @@ import { signOutRouter } from "./routes/signout";
 import { signUpRouter } from "./routes/signup";
 
 const app = express();
+app.set("trust proxy", true);
+app.use(
+  cookieSession({
+    signed: false, // we don't need encryption here
+    secure: true,
+  })
+);
 app.use(express.json());
 const PORT = 3000;
 
