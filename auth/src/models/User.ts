@@ -1,4 +1,5 @@
 import mongoose, { Model, Schema, Document } from "mongoose";
+import { Encryptor } from "../services/Encryptor";
 
 interface UserAttrs {
   email: string;
@@ -24,6 +25,18 @@ const userSchema = new Schema({
     required: true,
   },
 });
+
+/**
+ * Hash password before saving. For this we are using pre-save hook
+ */
+userSchema.pre("save", async function (done) {
+  if (this.isModified("password")) {
+    const hashedPassword = await Encryptor.hash(this.get("password"));
+    this.set("password", hashedPassword);
+  }
+  done();
+});
+
 userSchema.statics.build = (attrs: UserAttrs) => {
   return new User(attrs);
 };
