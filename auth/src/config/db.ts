@@ -4,6 +4,9 @@ import { DatabaseConnectionError } from "../error/DatabaseConnectionError";
 const connectionString = `mongodb://auth-mongo-srv:27017/auth`;
 
 export const initDB = async () => {
+  if (!process.env.JWT_KEY) {
+    throw new Error("JWT_KEY (jwt-secret-key) is not added");
+  }
   try {
     await mongoose.connect(connectionString);
     console.info("Connected to DB - auth");
