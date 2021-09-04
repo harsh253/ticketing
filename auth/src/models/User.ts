@@ -15,16 +15,28 @@ interface UserDoc extends Document {
   password: string;
 }
 
-const userSchema = new Schema({
-  email: {
-    type: String,
-    required: true,
+const userSchema = new Schema(
+  {
+    email: {
+      type: String,
+      required: true,
+    },
+    password: {
+      type: String,
+      required: true,
+    },
   },
-  password: {
-    type: String,
-    required: true,
-  },
-});
+  {
+    toJSON: {
+      transform(doc, ret) {
+        ret.id = ret._id;
+        delete ret._id;
+        delete ret.password;
+      },
+    },
+    versionKey: false, // to remove __v from response
+  }
+);
 
 /**
  * Hash password before saving. For this we are using pre-save hook

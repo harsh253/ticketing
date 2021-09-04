@@ -11,7 +11,10 @@ export class Encryptor {
     return `${buffer.toString("hex")}.${salt}`;
   }
 
-  static async isValid(storedText: string, receivedText: string) {
+  static async isValid(
+    storedText: string,
+    receivedText: string
+  ): Promise<boolean> {
     const [hashedText, salt] = storedText.split(".");
     const buffer = (await asyncScrypt(receivedText, salt, 64)) as Buffer;
 
