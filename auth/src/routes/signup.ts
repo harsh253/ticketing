@@ -4,11 +4,12 @@ import { BusinessValidationError } from "../error/BusinessValidationError";
 import { User } from "../models/User";
 import jwt from "jsonwebtoken";
 import { validateRequest } from "../middlewares/validateRequest";
+import { SIGN_UP } from "../modules/constants";
 
 const router = express.Router();
 
 router.post(
-  `/api/users/signup`,
+  `${SIGN_UP}`,
   signUpValidator(),
   validateRequest,
   async (req: Request, res: Response) => {

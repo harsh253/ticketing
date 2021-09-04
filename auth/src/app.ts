@@ -13,7 +13,7 @@ app.set("trust proxy", true);
 app.use(
   cookieSession({
     signed: false, // we don't need encryption here
-    secure: true,
+    secure: process.env.NODE_ENV !== "test",
   })
 );
 app.use(express.json());

@@ -1,15 +1,16 @@
 import express, { Request, Response } from "express";
+import jwt from "jsonwebtoken";
 import { BusinessValidationError } from "../error/BusinessValidationError";
 import { validateRequest } from "../middlewares/validateRequest";
 import { User } from "../models/User";
+import { SIGN_IN } from "../modules/constants";
 import { Encryptor } from "../services/Encryptor";
 import { signInValidator } from "../validators/signinValidator";
-import jwt from "jsonwebtoken";
 
 const router = express.Router();
 
 router.post(
-  `/api/users/signin`,
+  `${SIGN_IN}`,
   signInValidator(),
   validateRequest,
   async (req: Request, res: Response) => {
