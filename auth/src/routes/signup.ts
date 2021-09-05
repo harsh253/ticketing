@@ -1,26 +1,46 @@
 import express, { Request, Response } from "express";
 import { signUpValidator } from "../validators/signupValidator";
-import { validationResult } from "express-validator";
-import { RequestValidationError } from "../error/RequestValidationError";
-import { DatabaseConnectionError } from "../error/DatabaseConnectionError";
+import { BusinessValidationError } from "../error/BusinessValidationError";
+import { User } from "../models/User";
+import jwt from "jsonwebtoken";
+import { validateRequest } from "../middlewares/validateRequest";
+import { SIGN_UP } from "../modules/constants";
 
 const router = express.Router();
 
 router.post(
-  `/api/users/signup`,
+  `${SIGN_UP}`,
   signUpValidator(),
-  (req: Request, res: Response) => {
-    const errors = validationResult(req);
+  validateRequest,
+  async (req: Request, res: Response) => {
+    const { email, password }: { email: string; password: string } = req.body;
 
-    if (!errors.isEmpty()) {
-      throw new RequestValidationError(errors.array());
+    const existingUser = await User.findOne({ email });
+
+    if (existingUser) {
+      throw new BusinessValidationError("Email already exists");
     }
 
-    throw new DatabaseConnectionError();
+    const user = User.build({
+      email,
+      password,
+    });
 
-    const { email, password } = req.body;
+    await user.save();
 
-    res.send({});
+    const token = jwt.sign(
+      {
+        id: user.id,
+        email: user.email,
+      },
+      process.env.JWT_KEY! //secretkey
+    );
+
+    req.session = {
+      jwt: token,
+    };
+
+    res.status(201).send(user);
   }
 );
 
