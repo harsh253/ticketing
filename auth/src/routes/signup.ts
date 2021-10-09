@@ -1,9 +1,11 @@
 import express, { Request, Response } from "express";
 import { signUpValidator } from "../validators/signupValidator";
-import { BusinessValidationError } from "../error/BusinessValidationError";
+import {
+  BusinessValidationError,
+  validateRequest,
+} from "@hj-ticketing-common/common";
 import { User } from "../models/User";
 import jwt from "jsonwebtoken";
-import { validateRequest } from "../middlewares/validateRequest";
 import { SIGN_UP } from "../modules/constants";
 
 const router = express.Router();

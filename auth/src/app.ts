@@ -1,8 +1,7 @@
 import cookieSession from "cookie-session";
 import express from "express";
 import "express-async-errors";
-import { NotFoundError } from "./error/NotFoundError";
-import { errorHandler } from "./middlewares/errorHandler";
+import { NotFoundError, errorHandler } from "@hj-ticketing-common/common";
 import { currentUserRouter } from "./routes/current-user";
 import { signInRouter } from "./routes/signin";
 import { signOutRouter } from "./routes/signout";

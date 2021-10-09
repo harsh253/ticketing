@@ -1,6 +1,8 @@
 import express from "express";
-import { requireAuthMiddleware } from "../middlewares/requireAuthMiddleware";
-import { tokenMiddleware } from "../middlewares/tokenMiddleware";
+import {
+  requireAuthMiddleware,
+  tokenMiddleware,
+} from "@hj-ticketing-common/common";
 import { CURRENT_USER } from "../modules/constants";
 
 const router = express.Router();

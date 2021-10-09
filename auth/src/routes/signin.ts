@@ -1,7 +1,9 @@
 import express, { Request, Response } from "express";
 import jwt from "jsonwebtoken";
-import { BusinessValidationError } from "../error/BusinessValidationError";
-import { validateRequest } from "../middlewares/validateRequest";
+import {
+  BusinessValidationError,
+  validateRequest,
+} from "@hj-ticketing-common/common";
 import { User } from "../models/User";
 import { SIGN_IN } from "../modules/constants";
 import { Encryptor } from "../services/Encryptor";

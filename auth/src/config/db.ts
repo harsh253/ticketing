@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { DatabaseConnectionError } from "../error/DatabaseConnectionError";
+import { DatabaseConnectionError } from "@hj-ticketing-common/common";
 
 const connectionString = `mongodb://auth-mongo-srv:27017/auth`;
 
