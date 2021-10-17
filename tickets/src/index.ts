@@ -11,7 +11,9 @@ const initApp = () => {
     throw new Error("MONGO_URI is not added");
   }
   initDB(process.env.MONGO_URI);
-  app.listen(PORT, () => console.log(`Running auth service on port - ${PORT}`));
+  app.listen(PORT, () =>
+    console.log(`Running ticketing service on port - ${PORT}`)
+  );
 };
 
 initApp();
